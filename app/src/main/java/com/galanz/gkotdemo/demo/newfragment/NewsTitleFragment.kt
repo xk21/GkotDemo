@@ -39,6 +39,10 @@ class NewsTitleFragment: Fragment() {
         newsTitleRecyclerView.adapter = adapter
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     private fun getNews(): ArrayList<News> {
         val newsList = ArrayList<News>()
         for (i in 1..50) {//[0,50]双闭环
