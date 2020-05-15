@@ -1,7 +1,7 @@
 package com.galanz.gkotdemo.test
 
 class Money(val value: Int) {
-
+    //运算符重载
     operator fun plus(money: Money): Money {
         val sum = value + money.value
         return Money(sum)

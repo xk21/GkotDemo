@@ -12,5 +12,6 @@ import java.lang.StringBuilder
 
 fun main() {
     //eg:1
-
+    //扩展函数使用    println("eg:1 1 ${"qwqweq12313.//.,ee".lettersCount()}")
+    println("eg:1 1 ${"12".times(2)}")
 }

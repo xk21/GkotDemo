@@ -9,16 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.galanz.gkotdemo.R
+import com.galanz.gkotdemo.test.times
 import kotlinx.android.synthetic.main.activity_new_content.*
 import kotlinx.android.synthetic.main.news_title_frag.*
-import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
 /**
  *   Created by chenmy on 2020/5/14.
  */
-class NewsTitleFragment: Fragment() {
+class NewsTitleFragment : Fragment() {
 
     private var isTwoPane = false
 
@@ -46,24 +46,33 @@ class NewsTitleFragment: Fragment() {
     private fun getNews(): ArrayList<News> {
         val newsList = ArrayList<News>()
         for (i in 1..50) {//[0,50]双闭环
-            val news = News("This is news title $i", getRandomLengthString("This is news content $i. "))
+            val news =
+                News("This is news title $i", getRandomLengthString("This is news content $i. "))
             newsList.add(news)
         }
         return newsList
     }
 
+    //    private fun getRandomLengthString(str: String): String {
+//        val n = Random().nextInt(20) + 1
+//        val stringBuilder = StringBuilder()
+//        repeat(n){
+//            stringBuilder.append(str)
+//        }
+//        return stringBuilder.toString()
+//    }
     private fun getRandomLengthString(str: String): String {
         val n = Random().nextInt(20) + 1
-        val stringBuilder = StringBuilder()
-        repeat(n){
-            stringBuilder.append(str)
-        }
-        return stringBuilder.toString()
+//        return str.repeat(n)
+        //这个地方重载了扩展函数
+        return str * n
+
     }
 
-   inner class NewsAdapter(private val newList: List<News>): RecyclerView.Adapter<NewsAdapter.ViewHolder>(){
-      inner  class ViewHolder(view:View): RecyclerView.ViewHolder(view){
-          val newsTitle:TextView = view.findViewById(R.id.newsTitle)
+    inner class NewsAdapter(private val newList: List<News>) :
+        RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val newsTitle: TextView = view.findViewById(R.id.newsTitle)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -72,11 +81,11 @@ class NewsTitleFragment: Fragment() {
             val viewHolder = ViewHolder(view)
             viewHolder.itemView.setOnClickListener {
                 val news = newList[viewHolder.adapterPosition]
-                if (isTwoPane){
+                if (isTwoPane) {
                     val fragment = newsContentFrag as NewsContentFragment
                     fragment.refresh(news.title, news.content)
-                }else{
-                    NewContentActivity.actionStart(parent.context,news.title,news.content)
+                } else {
+                    NewContentActivity.actionStart(parent.context, news.title, news.content)
                 }
             }
 
